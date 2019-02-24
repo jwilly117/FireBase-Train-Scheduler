@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lots And Lots of Trains!!!</title>
+
+    <!--Bootstrap CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <!--Link to style.css-->
+    <link rel="stylesheet" href="style.css">
+
+    <!--Other CDNs-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+    <!--Moment -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+
+    <!--Something Else From JQuery-->
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+
+        <!--Jumbotron for top of screen-->
+
+        <div class="jumbotron jumbotron-fluid bg-dark">
+                <div class="container">
+                  <h1 class="display-4">Lots and Lots of Trains!!!</h1>
+                     <p class="lead">A spreadsheet about, well, trains</p>
+                </div>
+              </div>
+    
+              <h3 class="m-3">Check the Train Schedule</h3>
+      <br>
+
+        <!--Here we need to set up the table for displaying the information from Firebase-->
+
+        <table class="table table-dark" id="trainSchedule">
+                <thead>
+                  <tr>
+                    <th scope="col">Train Name</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Frequency</th>
+                    <th scope="col">Next Train Arrival</th>
+                    <th scope="col">Minutes From now</th>
+                  </tr>
+                </thead>
+
+        <!--Make an area of the table to accept input - this will be empty for now-->
+
+        <tbody id="train-list">
+        
+          
+            </tbody>
+          </table>
+
+
+        <h3 class="m-3"> Add A Train! </h3>
+          <br>
+
+        
+        <!--Make an area for input from user of the site using bootstrap-->
+        
+        <div class="input">
+
+                <form>
+                    <!--Form Fields-->
+
+                        <div class="form-group">
+                          <label for="formGroupExampleInput">Train Name</label>
+                          <input type="text" class="form-control" id="name" placeholder="Example input">
+                        </div>
+    
+                        <div class="form-group">
+                          <label for="formGroupExampleInput2">Destination</label>
+                          <input type="text" class="form-control" id="destination" placeholder="Another input">
+                        </div>
+    
+                        <div class="form-group">
+                             <label for="formGroupExampleInput">First Train Time</label>
+                             <input type="text" class="form-control" id="firstTrain" placeholder="Example input">
+                        </div>        
+                        
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Frequency (Minutes)</label>
+                            <input type="text" class="form-control" id="frequency" placeholder="Example input">
+                        </div>
+                              
+                       <!--Submit button-->
+                        
+                      </form>
+                      <button type="submit" class="btn btn-primary" id="addTrain">Submit</button>
+                      <br><br><br>
+                    </div>
+
+          <!--Add Scripts for Firebase-->
+
+          <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+
+          <!--Link Our Firebase and initialize-->
+    <script>
+     // Initialize Firebase
+    var config = {
+     apiKey: "AIzaSyA9-0yGhoTlaPXPKPeCtrmDL3_qKmZRCM8",
+     authDomain: "train-scheduler-7c87b.firebaseapp.com",
+     databaseURL: "https://train-scheduler-7c87b.firebaseio.com",
+     projectId: "train-scheduler-7c87b",
+     storageBucket: "train-scheduler-7c87b.appspot.com",
+     messagingSenderId: "671959171786"
+    };
+
+     firebase.initializeApp(config);
+
+     let database = firebase.database();
+
+    //Fill the Firebase with initial data when button is clicked
+    //The button is for adding trains
+    $("#addTrain").on("click", function(event){
+      event.preventDefault();
+
+      //Get the user input from the fields and assign them to variables
+      let trainName = $("#name")
+      .val().trim();
+
+      let destination = $("#destination")
+      .val().trim();
+
+      let firstTrain = $("#firstTrain")
+      .val().trim();
+
+      let frequency = $("#frequency")
+      .val().trim();
+      
+      // Now, to make a local, temporary object for holding train data
+
+      let tempTrain = {
+        name: trainName,
+        destination: destination,
+        firstTrain: firstTrain,
+        frequency: frequency
+      };
+
+      // Now to upload the train data to the database
+      database.ref().push(tempTrain);
+
+      // And test the values in the console
+      console.log("The following values were pushed to the firebase")
+      console.log(tempTrain.name);
+      console.log(tempTrain.destination);
+      console.log(tempTrain.firstTrain);
+      console.log(tempTrain.frequency);
+
+      alert("Train Successfully Added");
+
+      $("#name").val("");
+      $("#destination").val("");
+      $("#firstTrain").val("");
+      $("#frequency").val("");
+
+    });
+
+    // Now make a firebase event that pulls the data back down onto the html and formats it correctly
+    database.ref().on("child_added", function(snapshot, prevChildKey){
+      console.log(snapshot.val());
+
+
+    //Store Everything into a variable
+    let snapName = snapshot.val().name;
+    let snapDestination = snapshot.val().destination;
+    let snapFirstTrain = snapshot.val().firstTrain;
+    let snapFrequency = snapshot.val().frequency;
+
+    let timeArr = snapFirstTrain.split(":");
+    let trainTime = moment().hours(timeArr[0]).minutes(timeArr[1]);
+
+    let maxMoment = moment.max(moment(), trainTime);
+    let tMinutes;
+    let tArrival;
+
+    // If the first train is later than the current time, sent arrival to the first train time
+    if(maxMoment === trainTime){
+      tArrival = trainTime.format("hh:mm A");
+      tMinutes = trainTime.diff(moment(), "minutes");
+    } else {
+      
+      // Here we need to calculate the minutes until arrival
+
+      let differenceTimes = moment().diff(trainTime, "minutes");
+      let tRemainder = differenceTimes % snapFrequency;
+      tMinutes = snapFrequency - tRemainder;
+
+      // To calculate the arrival time of the train, add the tMinutes to the current time
+      tArrival = moment()
+      .add(tMinutes, "m")
+      .format("hh:mm A");
+    }
+
+    console.log("tMinutes: ", tMinutes);
+    console.log("tArrival: ", tArrival);
+
+    // Add each trains data into the table using JQueryyyyyy
+
+
+
+    $("#train-list").append(`
+        <tr>
+          <th scope="row">${snapName}</th>
+          <td>${snapDestination}</td>
+          <td>${snapFrequency}</td>
+          <td>${tArrival}</td>
+          <td>${tMinutes}</td>
+          </tr>
+          `)
+  });
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+.input{
+    margin-left:90px;
+    margin-right:90px;
+    }
+    
+    body{
+        background: darkgray
+    }
+    
+    .display-4{
+        color:white;
+        font-weight: bolder;
+    }
+    
+    .lead{
+        color:white;
+        font-weight: bolder;
+    }
