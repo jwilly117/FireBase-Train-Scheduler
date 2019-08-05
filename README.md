@@ -2,22 +2,23 @@
 
 
 ### Summary
-WHHW is an intuitive way to search for events and NYT articles on a certain day, primarily a persons birthday. It pulls from the NYT API from their database of articles and from the another API for famous events in history. It then allows users to input their name or a name of their choice and share an article of their choosing to the social panel over on the left hand side of the screen
+Train Scheduler is a table based scheduling tool used to demonstrate the use of firebase as a database structure. 
 
 ### The goal of this project
-The goal was to make a simple page and catch the attention of potentially a room full of people with a quick, easy, and unique social experience based around dates in history. 
+The goals is simply to make a list based application a user can add items to, in this case trains. Then the data in sent to and stored in a firebase table and pulled onto a styled table on the site that includes all previous entries. 
 
 ### File Structure
-The project is made esentially with one page styled using the materialize CSS library, and interacting with Two different API's to retrieve information. To share that information, the side pushes and pulls from a firebase table into a share section on the left. 
+At the time of this writing, all of the data is stored in one firebase table. As for the site, it is simply a one page html and CSS site with some in-line Javascript to interact with the firebase table. 
 
 ### Instructions
-Input your name and your desired date, usually the users birthday, and then click submit. Then the app will pull information from its two API's about relative articles and events and display them down below in two collumns. Then, if a user desires, you can share an event by clicking the button next to the article. The last 30 shared articles will reflected on the left. 
+Upon loading the page, the user will be shown a table displaying the collums Train name, Destination, Frequency, Next arrival, and the minutes until that next arrival. These will remain pulled up until the firebase table is manually cleared. 
+
+Down below, the user can enter information about a new train, and the table will be populated with the correctly calculated information once the user click the submit button. 
 
 ### Deployment & Screenshot
-[Link to Deployment]( )
+[Link to Deployment](https://jwilly117.github.io/FireBase-Train-Scheduler/)
 
-![image](https://imgur.com/S1p)
+![image](https://imgur.com/ggBkRal.png)
 
 ### Future of this project
-The future potential of this project would be to enhance the user experience with a more fluid page, and to source information from more sources. For example, one idea was show information about famous birthdays on specified dates in history. 
-
+I would simply like to polish up the UI, and perhaps add a few more tables with more varying information. 
